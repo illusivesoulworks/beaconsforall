@@ -20,6 +20,7 @@
 package c4.creaturebeacons.core;
 
 import com.google.common.base.Predicate;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityTameable;
@@ -29,6 +30,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityBeacon;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -62,14 +64,31 @@ public class EventHandlerCommon {
     }
 
     private static boolean isValidCreature(EntityLivingBase entityLivingBase) {
+        boolean flag1 = false;
 
         switch (ConfigHandler.creatureType) {
-            case ALL_TAMED : return entityLivingBase instanceof EntityTameable && ((EntityTameable)
-                    entityLivingBase).isTamed();
-            case ALL_PASSIVE: return entityLivingBase instanceof IAnimals && !(entityLivingBase instanceof IMob);
-            case ALL: return true;
+            case ALL_TAMED : flag1 = entityLivingBase instanceof EntityTameable && ((EntityTameable) entityLivingBase).isTamed();
+                break;
+            case ALL_PASSIVE: flag1 = entityLivingBase instanceof IAnimals && !(entityLivingBase instanceof IMob);
+                break;
+            case ALL: flag1 = true;
+                break;
         }
-        return false;
+
+        ResourceLocation rl = EntityList.getKey(entityLivingBase);
+        boolean flag2 = false;
+
+        if (rl != null) {
+
+            for (String s : ConfigHandler.creatureList) {
+
+                if (s.equals(rl.toString())) {
+                    flag2 = true;
+                    break;
+                }
+            }
+        }
+        return flag1 || flag2;
     }
 
     private static void addBeaconEffectsToCreatures(TileEntityBeacon beacon, World world) {

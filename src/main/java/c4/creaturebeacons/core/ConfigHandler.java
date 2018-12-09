@@ -33,6 +33,10 @@ public class ConfigHandler {
     @Config.Comment("Set which creatures can be affected by beacons")
     public static CreatureType creatureType = CreatureType.ALL_TAMED;
 
+    @Config.Name("Additional Creatures")
+    @Config.Comment("Add specific creatures that can be affected by beacons")
+    public static String[] creatureList = new String[]{};
+
     enum CreatureType {
         ALL_TAMED,
         ALL_PASSIVE,
