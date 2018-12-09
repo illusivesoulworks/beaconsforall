@@ -3,3 +3,7 @@
 Creatures Love Beacons, which is a terrible name but I'm committed to it now, is a mod that allows beacons to affect more than just players. Through the configuration file, users can set whether beacons will also affect tamed mobs, passive mobs, or all mobs. All beacon effects that would apply to nearby players will then also apply to nearby mobs of the specified type.
 
 This mod can be used server-side only.
+
+### Configuration Options
+* Creature Type - Specify whether beacons can affect all tamed mobs, all passive mobs, or any mobs.
+* Creature List - Specify specific mobs that can be affected by beacons.
