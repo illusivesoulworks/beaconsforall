@@ -7,3 +7,7 @@ This mod can be used server-side only.
 ### Configuration Options
 * Creature Type - Specify whether beacons can affect all tamed mobs, all passive mobs, or any mobs.
 * Creature List - Specify specific mobs that can be affected by beacons.
+
+# 1.14 Pre-Release
+
+The pre-release for 1.14 requires the Fabric mod loader. For the moment, all configuration options have been removed and will be re-implemented at a later date.
