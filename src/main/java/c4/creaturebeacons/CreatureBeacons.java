@@ -36,9 +36,7 @@ import java.util.function.Predicate;
 
 public class CreatureBeacons {
 
-	private static final Predicate<Entity> VALID_CREATURE = (var0) -> {
-		return !(var0 instanceof PlayerEntity) && !(var0 instanceof HostileEntity);
-	};
+	private static final Predicate<Entity> VALID_CREATURE = (var0) -> !(var0 instanceof PlayerEntity) && !(var0 instanceof HostileEntity);
 
 	public static void updateCreatureEffects(BeaconBlockEntity beacon, StatusEffect primary, StatusEffect secondary, boolean isActive) {
 
