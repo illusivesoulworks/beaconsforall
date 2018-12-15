@@ -1,0 +1,15 @@
+{
+  "id": "creaturebeacons",
+  "name": "Creatures Love Beacons",
+  "version": "1.14-pre1",
+  "authors": ["C4"],
+  "license": "LGPL",
+  "description": "Allows beacons to affect more than just players!",
+  "side": "universal",
+  "mixins": {
+    "common": "creaturebeacons.common.json"
+  },
+  "dependencies": {
+	"fabric": ""
+  }
+}

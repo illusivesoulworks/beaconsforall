@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "c4.creaturebeacons.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinBeaconBlockEntity"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
