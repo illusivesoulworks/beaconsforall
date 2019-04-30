@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018  C4
+ * Copyright (C) 2018-2019  C4
  *
  * This file is part of Creatures Love Beacons, a mod made for Minecraft.
  *
@@ -17,14 +17,14 @@
  * License along with Creatures Love Beacons.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package c4.creaturebeacons.core;
+package top.theillusivec4.creatureslovebeacons.common;
 
 import com.google.common.base.Predicate;
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.passive.IAnimals;
+import net.minecraft.entity.passive.IAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -34,25 +34,26 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import top.theillusivec4.creatureslovebeacons.util.ReflectionAccessor;
 
 import java.util.List;
 
 public class EventHandlerCommon {
 
-    private static final Predicate<EntityLivingBase> VALID_CREATURE = living -> !(living instanceof EntityPlayer) &&
-            isValidCreature(living);
+    private static final Predicate<EntityLivingBase> VALID_CREATURE = living -> !(living instanceof EntityPlayer)
+            && isValidCreature(living);
 
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent evt) {
         World world = evt.world;
 
-        if (!world.isRemote && evt.phase == TickEvent.Phase.END && world.getTotalWorldTime() % 80L == 0L) {
+        if (!world.isRemote && evt.phase == TickEvent.Phase.END && world.getGameTime() % 80L == 0L) {
 
             for (TileEntity tileentity : world.tickableTileEntities) {
 
-                if (tileentity instanceof TileEntityBeacon && !tileentity.isInvalid() && tileentity.hasWorld()) {
+                if (tileentity instanceof TileEntityBeacon && !tileentity.isRemoved() && tileentity.hasWorld()) {
                     BlockPos blockpos = tileentity.getPos();
 
                     if (world.isBlockLoaded(blockpos, false) && world.getWorldBorder().contains(blockpos)) {
@@ -66,21 +67,20 @@ public class EventHandlerCommon {
     private static boolean isValidCreature(EntityLivingBase entityLivingBase) {
         boolean flag1 = false;
 
-        switch (ConfigHandler.creatureType) {
+        switch (CreaturesLoveBeaconsConfig.SERVER.creatureType.get()) {
             case ALL_TAMED : flag1 = entityLivingBase instanceof EntityTameable && ((EntityTameable) entityLivingBase).isTamed();
                 break;
-            case ALL_PASSIVE: flag1 = entityLivingBase instanceof IAnimals && !(entityLivingBase instanceof IMob);
+            case ALL_PASSIVE: flag1 = entityLivingBase instanceof IAnimal && !(entityLivingBase instanceof IMob);
                 break;
             case ALL: flag1 = true;
                 break;
         }
-
-        ResourceLocation rl = EntityList.getKey(entityLivingBase);
+        ResourceLocation rl = EntityType.getId(entityLivingBase.getType());
         boolean flag2 = false;
 
         if (rl != null) {
 
-            for (String s : ConfigHandler.creatureList) {
+            for (String s : CreaturesLoveBeaconsConfig.SERVER.additionalCreatures.get()) {
 
                 if (s.equals(rl.toString())) {
                     flag2 = true;
