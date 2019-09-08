@@ -19,48 +19,47 @@
 
 package top.theillusivec4.creatureslovebeacons.common;
 
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 import top.theillusivec4.creatureslovebeacons.CreaturesLoveBeacons;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CreaturesLoveBeaconsConfig {
 
-    private static final String CONFIG_PREFIX = "gui." + CreaturesLoveBeacons.MODID + ".config.";
+  public static final ForgeConfigSpec SPEC;
+  public static final Server SERVER;
+  private static final String CONFIG_PREFIX = "gui." + CreaturesLoveBeacons.MODID + ".config.";
 
-    public static class Server {
+  static {
+    final Pair<Server, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder()
+        .configure(Server::new);
+    SPEC = specPair.getRight();
+    SERVER = specPair.getLeft();
+  }
+  public enum CreatureType {
+    ALL_TAMED,
+    ALL_PASSIVE,
+    ALL
+  }
 
-        public final ForgeConfigSpec.EnumValue<CreatureType> creatureType;
-        public final ForgeConfigSpec.ConfigValue<List<String>> additionalCreatures;
+  public static class Server {
 
-        public Server(ForgeConfigSpec.Builder builder) {
-            builder.push("server");
+    public final ForgeConfigSpec.EnumValue<CreatureType> creatureType;
+    public final ForgeConfigSpec.ConfigValue<List<String>> additionalCreatures;
 
-            creatureType = builder
-                    .comment("Set which creatures can be affected by beacons [ALL_TAMED, ALL_PASSIVE, ALL]")
-                    .translation(CONFIG_PREFIX + "creatureType")
-                    .defineEnum("creatureType", CreatureType.ALL_TAMED);
+    public Server(ForgeConfigSpec.Builder builder) {
+      builder.push("server");
 
-            additionalCreatures = builder
-                    .comment("Add specific creatures that can be affected by beacons")
-                    .translation(CONFIG_PREFIX + "additionalCreatures")
-                    .define("additionalCreatures", new ArrayList<>());
-        }
+      creatureType = builder
+          .comment("Set which creatures can be affected by beacons [ALL_TAMED, ALL_PASSIVE, ALL]")
+          .translation(CONFIG_PREFIX + "creatureType")
+          .defineEnum("creatureType", CreatureType.ALL_TAMED);
+
+      additionalCreatures = builder
+          .comment("Add specific creatures that can be affected by beacons")
+          .translation(CONFIG_PREFIX + "additionalCreatures")
+          .define("additionalCreatures", new ArrayList<>());
     }
-
-    public enum CreatureType {
-        ALL_TAMED,
-        ALL_PASSIVE,
-        ALL
-    }
-
-    public static final ForgeConfigSpec serverSpec;
-    public static final Server SERVER;
-    static {
-        final Pair<Server, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Server::new);
-        serverSpec = specPair.getRight();
-        SERVER = specPair.getLeft();
-    }
+  }
 }

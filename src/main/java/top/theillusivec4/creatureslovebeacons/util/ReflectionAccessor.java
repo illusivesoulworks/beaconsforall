@@ -19,25 +19,29 @@
 
 package top.theillusivec4.creatureslovebeacons.util;
 
-import net.minecraft.potion.Potion;
-import net.minecraft.tileentity.TileEntityBeacon;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-
+import java.util.List;
 import javax.annotation.Nullable;
+import net.minecraft.potion.Effect;
+import net.minecraft.tileentity.BeaconTileEntity;
+import net.minecraft.tileentity.BeaconTileEntity.BeamSegment;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class ReflectionAccessor {
 
-    public static boolean isComplete(TileEntityBeacon beacon) {
-        return ObfuscationReflectionHelper.getPrivateValue(TileEntityBeacon.class, beacon, "field_146015_k");
-    }
+  public static List<BeamSegment> getBeamSegments(BeaconTileEntity beacon) {
+    return ObfuscationReflectionHelper
+        .getPrivateValue(BeaconTileEntity.class, beacon, "field_174909_f");
+  }
 
-    @Nullable
-    public static Potion getPrimaryEffect(TileEntityBeacon beacon) {
-        return ObfuscationReflectionHelper.getPrivateValue(TileEntityBeacon.class, beacon, "field_146013_m");
-    }
+  @Nullable
+  public static Effect getPrimaryEffect(BeaconTileEntity beacon) {
+    return ObfuscationReflectionHelper
+        .getPrivateValue(BeaconTileEntity.class, beacon, "field_146013_m");
+  }
 
-    @Nullable
-    public static Potion getSecondaryEffect(TileEntityBeacon beacon) {
-        return ObfuscationReflectionHelper.getPrivateValue(TileEntityBeacon.class, beacon, "field_146010_n");
-    }
+  @Nullable
+  public static Effect getSecondaryEffect(BeaconTileEntity beacon) {
+    return ObfuscationReflectionHelper
+        .getPrivateValue(BeaconTileEntity.class, beacon, "field_146010_n");
+  }
 }

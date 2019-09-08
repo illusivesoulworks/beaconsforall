@@ -35,7 +35,7 @@ public class CreaturesLoveBeacons {
 
     public CreaturesLoveBeacons() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CreaturesLoveBeaconsConfig.serverSpec);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CreaturesLoveBeaconsConfig.SPEC);
     }
 
     private void setup(FMLCommonSetupEvent evt) {
