@@ -37,6 +37,7 @@ public class CreaturesLoveBeaconsConfig {
     SPEC = specPair.getRight();
     SERVER = specPair.getLeft();
   }
+
   public enum CreatureType {
     ALL_TAMED,
     ALL_PASSIVE,
