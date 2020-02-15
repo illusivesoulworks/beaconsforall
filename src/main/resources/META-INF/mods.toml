@@ -1,6 +1,6 @@
 modLoader="javafml"
 loaderVersion="[31,)"
-issueTrackerURL="https://github.com/TheIllusiveC4/CreaturesLoveBeacons/issues"
+issueTrackerURL="https://github.com/TheIllusiveC4/BeaconsForAll/issues"
 logoFile="${mod_icon}"
 [[mods]]
 modId="${mod_id}"
