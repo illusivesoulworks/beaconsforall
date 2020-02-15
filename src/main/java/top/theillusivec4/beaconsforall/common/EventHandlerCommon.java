@@ -17,7 +17,7 @@
  * License along with Creatures Love Beacons.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package top.theillusivec4.creatureslovebeacons.common;
+package top.theillusivec4.beaconsforall.common;
 
 import com.google.common.base.Predicate;
 import java.util.List;
@@ -36,7 +36,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import top.theillusivec4.creatureslovebeacons.util.ReflectionAccessor;
+import top.theillusivec4.beaconsforall.util.ReflectionAccessor;
 
 public class EventHandlerCommon {
 
@@ -46,7 +46,7 @@ public class EventHandlerCommon {
   private static boolean isValidCreature(LivingEntity livingEntity) {
     boolean validType = false;
 
-    switch (CreaturesLoveBeaconsConfig.SERVER.creatureType.get()) {
+    switch (BeaconsForAllConfig.SERVER.creatureType.get()) {
       case TAMED:
         validType =
             livingEntity instanceof TameableEntity && ((TameableEntity) livingEntity).isTamed();
@@ -59,7 +59,7 @@ public class EventHandlerCommon {
         break;
     }
     ResourceLocation rl = livingEntity.getType().getRegistryName();
-    boolean validConfig = rl != null && CreaturesLoveBeaconsConfig.SERVER.additionalCreatures.get()
+    boolean validConfig = rl != null && BeaconsForAllConfig.SERVER.additionalCreatures.get()
         .contains(rl.toString());
     return validType || validConfig;
   }

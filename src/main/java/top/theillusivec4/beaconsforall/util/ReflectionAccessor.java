@@ -17,7 +17,7 @@
  * License along with Creatures Love Beacons.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package top.theillusivec4.creatureslovebeacons.util;
+package top.theillusivec4.beaconsforall.util;
 
 import java.util.List;
 import javax.annotation.Nullable;

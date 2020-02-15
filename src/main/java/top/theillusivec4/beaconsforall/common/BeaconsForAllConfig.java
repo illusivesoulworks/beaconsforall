@@ -17,19 +17,19 @@
  * License along with Creatures Love Beacons.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package top.theillusivec4.creatureslovebeacons.common;
+package top.theillusivec4.beaconsforall.common;
 
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
-import top.theillusivec4.creatureslovebeacons.CreaturesLoveBeacons;
+import top.theillusivec4.beaconsforall.BeaconsForAll;
 
-public class CreaturesLoveBeaconsConfig {
+public class BeaconsForAllConfig {
 
   public static final ForgeConfigSpec SPEC;
   public static final Server SERVER;
-  private static final String CONFIG_PREFIX = "gui." + CreaturesLoveBeacons.MODID + ".config.";
+  private static final String CONFIG_PREFIX = "gui." + BeaconsForAll.MODID + ".config.";
 
   static {
     final Pair<Server, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder()

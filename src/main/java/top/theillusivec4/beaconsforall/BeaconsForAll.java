@@ -17,7 +17,7 @@
  * License along with Creatures Love Beacons.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package top.theillusivec4.creatureslovebeacons;
+package top.theillusivec4.beaconsforall;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -25,17 +25,17 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import top.theillusivec4.creatureslovebeacons.common.CreaturesLoveBeaconsConfig;
-import top.theillusivec4.creatureslovebeacons.common.EventHandlerCommon;
+import top.theillusivec4.beaconsforall.common.BeaconsForAllConfig;
+import top.theillusivec4.beaconsforall.common.EventHandlerCommon;
 
-@Mod(CreaturesLoveBeacons.MODID)
-public class CreaturesLoveBeacons {
+@Mod(BeaconsForAll.MODID)
+public class BeaconsForAll {
 
-    public static final String MODID = "creatureslovebeacons";
+    public static final String MODID = "beaconsforall";
 
-    public CreaturesLoveBeacons() {
+    public BeaconsForAll() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CreaturesLoveBeaconsConfig.SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, BeaconsForAllConfig.SPEC);
     }
 
     private void setup(FMLCommonSetupEvent evt) {
