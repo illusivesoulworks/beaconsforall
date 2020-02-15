@@ -39,8 +39,9 @@ public class CreaturesLoveBeaconsConfig {
   }
 
   public enum CreatureType {
-    ALL_TAMED,
-    ALL_PASSIVE,
+    NONE,
+    TAMED,
+    PASSIVE,
     ALL
   }
 
@@ -53,9 +54,9 @@ public class CreaturesLoveBeaconsConfig {
       builder.push("server");
 
       creatureType = builder
-          .comment("Set which creatures can be affected by beacons [ALL_TAMED, ALL_PASSIVE, ALL]")
+          .comment("Set which creatures can be affected by beacons")
           .translation(CONFIG_PREFIX + "creatureType")
-          .defineEnum("creatureType", CreatureType.ALL_TAMED);
+          .defineEnum("creatureType", CreatureType.TAMED);
 
       additionalCreatures = builder
           .comment("Add specific creatures that can be affected by beacons")

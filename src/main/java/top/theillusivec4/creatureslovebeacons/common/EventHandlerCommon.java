@@ -21,7 +21,6 @@ package top.theillusivec4.creatureslovebeacons.common;
 
 import com.google.common.base.Predicate;
 import java.util.List;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -48,29 +47,20 @@ public class EventHandlerCommon {
     boolean validType = false;
 
     switch (CreaturesLoveBeaconsConfig.SERVER.creatureType.get()) {
-      case ALL_TAMED:
+      case TAMED:
         validType =
             livingEntity instanceof TameableEntity && ((TameableEntity) livingEntity).isTamed();
         break;
-      case ALL_PASSIVE:
+      case PASSIVE:
         validType = livingEntity instanceof AnimalEntity && !(livingEntity instanceof IMob);
         break;
       case ALL:
         validType = true;
         break;
     }
-
-    ResourceLocation rl = EntityType.getKey(livingEntity.getType());
-    boolean validConfig = false;
-
-    for (String s : CreaturesLoveBeaconsConfig.SERVER.additionalCreatures.get()) {
-
-      if (s.equals(rl.toString())) {
-        validConfig = true;
-        break;
-      }
-    }
-
+    ResourceLocation rl = livingEntity.getType().getRegistryName();
+    boolean validConfig = rl != null && CreaturesLoveBeaconsConfig.SERVER.additionalCreatures.get()
+        .contains(rl.toString());
     return validType || validConfig;
   }
 
