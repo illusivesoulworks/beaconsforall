@@ -11,13 +11,13 @@ authors="${mod_author}"
 description='''
 ${mod_description}
 '''
-[[dependencies.creatureslovebeacons]]
+[[dependencies.beaconsforall]]
     modId="forge"
     mandatory=true
     versionRange="[31.1.0,)"
     ordering="NONE"
     side="SERVER"
-[[dependencies.creatureslovebeacons]]
+[[dependencies.beaconsforall]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.15.2,1.16)"
