@@ -21,47 +21,59 @@ package top.theillusivec4.beaconsforall.common;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.entity.EntityType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.tuple.Pair;
 import top.theillusivec4.beaconsforall.BeaconsForAll;
 
 public class BeaconsForAllConfig {
 
-  public static final ForgeConfigSpec SPEC;
-  public static final Server SERVER;
+  public static final ForgeConfigSpec CONFIG_SPEC;
+  public static final Config CONFIG;
   private static final String CONFIG_PREFIX = "gui." + BeaconsForAll.MODID + ".config.";
 
   static {
-    final Pair<Server, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder()
-        .configure(Server::new);
-    SPEC = specPair.getRight();
-    SERVER = specPair.getLeft();
+    final Pair<Config, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder()
+        .configure(Config::new);
+    CONFIG_SPEC = specPair.getRight();
+    CONFIG = specPair.getLeft();
   }
 
-  public enum CreatureType {
-    NONE,
-    TAMED,
-    PASSIVE,
-    ALL
+  public static CreatureType creatureType;
+  public static List<EntityType<?>> additionalCreatures;
+
+  public static void bake() {
+    creatureType = CONFIG.creatureType.get();
+    additionalCreatures = new ArrayList<>();
+    CONFIG.additionalCreatures.get().forEach(creature -> {
+      EntityType<?> type = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(creature));
+
+      if (type != null) {
+        additionalCreatures.add(type);
+      }
+    });
   }
 
-  public static class Server {
+  public static class Config {
 
     public final ForgeConfigSpec.EnumValue<CreatureType> creatureType;
-    public final ForgeConfigSpec.ConfigValue<List<String>> additionalCreatures;
+    public final ForgeConfigSpec.ConfigValue<List<? extends String>> additionalCreatures;
 
-    public Server(ForgeConfigSpec.Builder builder) {
-      builder.push("server");
-
-      creatureType = builder
-          .comment("Set which creatures can be affected by beacons")
+    public Config(ForgeConfigSpec.Builder builder) {
+      creatureType = builder.comment("Set which creatures can be affected by beacons")
           .translation(CONFIG_PREFIX + "creatureType")
           .defineEnum("creatureType", CreatureType.TAMED);
 
       additionalCreatures = builder
           .comment("Add specific creatures that can be affected by beacons")
           .translation(CONFIG_PREFIX + "additionalCreatures")
-          .define("additionalCreatures", new ArrayList<>());
+          .defineList("additionalCreatures", new ArrayList<>(), s -> s instanceof String);
     }
+  }
+
+  public enum CreatureType {
+    NONE, TAMED, PASSIVE, ALL
   }
 }

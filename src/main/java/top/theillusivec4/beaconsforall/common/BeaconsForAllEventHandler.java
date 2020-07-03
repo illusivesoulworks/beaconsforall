@@ -30,7 +30,6 @@ import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.tileentity.BeaconTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -38,7 +37,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import top.theillusivec4.beaconsforall.util.ReflectionAccessor;
 
-public class EventHandlerCommon {
+public class BeaconsForAllEventHandler {
 
   private static final Predicate<LivingEntity> VALID_CREATURE = living ->
       !(living instanceof PlayerEntity) && isValidCreature(living);
@@ -46,7 +45,7 @@ public class EventHandlerCommon {
   private static boolean isValidCreature(LivingEntity livingEntity) {
     boolean validType = false;
 
-    switch (BeaconsForAllConfig.SERVER.creatureType.get()) {
+    switch (BeaconsForAllConfig.creatureType) {
       case TAMED:
         validType =
             livingEntity instanceof TameableEntity && ((TameableEntity) livingEntity).isTamed();
@@ -58,9 +57,7 @@ public class EventHandlerCommon {
         validType = true;
         break;
     }
-    ResourceLocation rl = livingEntity.getType().getRegistryName();
-    boolean validConfig = rl != null && BeaconsForAllConfig.SERVER.additionalCreatures.get()
-        .contains(rl.toString());
+    boolean validConfig = BeaconsForAllConfig.additionalCreatures.contains(livingEntity.getType());
     return validType || validConfig;
   }
 
