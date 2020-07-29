@@ -12,10 +12,13 @@
   },
   "license": "LGPLv3.0",
   "icon": "assets/beaconsforall/beaconsforall_icon.png",
-  "environment": "server",
+  "environment": "*",
   "entrypoints": {
     "main": [
       "top.theillusivec4.beaconsforall.loader.common.BeaconsForAllMod"
+    ],
+    "modmenu": [
+      "top.theillusivec4.beaconsforall.loader.integration.BeaconsForAllModMenu"
     ]
   },
   "mixins": [
