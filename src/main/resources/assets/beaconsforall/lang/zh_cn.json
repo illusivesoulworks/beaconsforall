@@ -2,10 +2,10 @@
   "text.autoconfig.beaconsforall.title": "公共信标",
   "text.autoconfig.beaconsforall.option.creatureType": "受影响的生物类型",
   "text.autoconfig.beaconsforall.option.creatureType.@Tooltip[0]": "选择会受信标效果影响的生物类型",
-  "text.autoconfig.beaconsforall.option.creatureType.@Tooltip[1]": "NONE： 没有生物被影响",
-  "text.autoconfig.beaconsforall.option.creatureType.@Tooltip[2]": "TAMED： 所有被驯服的生物",
-  "text.autoconfig.beaconsforall.option.creatureType.@Tooltip[3]": "PASSIVE： 所有被动型生物",
-  "text.autoconfig.beaconsforall.option.creatureType.@Tooltip[4]": "ALL： 所有生物",
+  "text.autoconfig.beaconsforall.option.creatureType.@Tooltip[1]": "NONE: 没有生物被影响",
+  "text.autoconfig.beaconsforall.option.creatureType.@Tooltip[2]": "TAMED: 所有被驯服的生物",
+  "text.autoconfig.beaconsforall.option.creatureType.@Tooltip[3]": "PASSIVE: 所有被动型生物",
+  "text.autoconfig.beaconsforall.option.creatureType.@Tooltip[4]": "ALL: 所有生物",
   "text.autoconfig.beaconsforall.option.additionalCreatures": "指定生物",
   "text.autoconfig.beaconsforall.option.additionalCreatures.@Tooltip": "受信标影响的特定生物的命名空间 ID 列表"
 }
