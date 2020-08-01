@@ -1,5 +1,5 @@
 {
-  "text.autoconfig.beaconsforall.title": "公共信标",
+  "text.autoconfig.beaconsforall.title": "公共信标 (Beacons For All)",
   "text.autoconfig.beaconsforall.option.creatureType": "受影响的生物类型",
   "text.autoconfig.beaconsforall.option.creatureType.@Tooltip[0]": "选择会受信标效果影响的生物类型",
   "text.autoconfig.beaconsforall.option.creatureType.@Tooltip[1]": "NONE: 没有生物被影响",
