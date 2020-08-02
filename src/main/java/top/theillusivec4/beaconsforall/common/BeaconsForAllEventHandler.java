@@ -21,10 +21,12 @@ package top.theillusivec4.beaconsforall.common;
 
 import com.google.common.base.Predicate;
 import java.util.List;
+import net.minecraft.entity.IEquipable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
@@ -47,8 +49,7 @@ public class BeaconsForAllEventHandler {
 
     switch (BeaconsForAllConfig.creatureType) {
       case TAMED:
-        validType =
-            livingEntity instanceof TameableEntity && ((TameableEntity) livingEntity).isTamed();
+        validType = isTamed(livingEntity);
         break;
       case PASSIVE:
         validType = livingEntity instanceof AnimalEntity && !(livingEntity instanceof IMob);
@@ -59,6 +60,20 @@ public class BeaconsForAllEventHandler {
     }
     boolean validConfig = BeaconsForAllConfig.additionalCreatures.contains(livingEntity.getType());
     return validType || validConfig;
+  }
+
+  private static boolean isTamed(LivingEntity livingEntity) {
+    boolean flag =
+        livingEntity instanceof TameableEntity && ((TameableEntity) livingEntity).isTamed();
+
+    if (!flag) {
+      flag = livingEntity instanceof AbstractHorseEntity && ((AbstractHorseEntity) livingEntity).isTame();
+    }
+
+    if (!flag) {
+      flag = livingEntity instanceof IEquipable && ((IEquipable) livingEntity).isHorseSaddled();
+    }
+    return flag;
   }
 
   private static void addBeaconEffectsToCreatures(BeaconTileEntity beacon, World world) {
