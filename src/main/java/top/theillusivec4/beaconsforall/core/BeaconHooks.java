@@ -23,10 +23,12 @@ import com.google.common.base.Predicate;
 import java.util.List;
 import net.minecraft.block.entity.BeaconBlockEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Saddleable;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.HorseBaseEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -46,8 +48,7 @@ public class BeaconHooks {
 
     switch (config.getCreatureType()) {
       case TAMED:
-        validType =
-            livingEntity instanceof TameableEntity && ((TameableEntity) livingEntity).isTamed();
+        validType = isTamed(livingEntity);
         break;
       case PASSIVE:
         validType = livingEntity instanceof AnimalEntity && !(livingEntity instanceof Monster);
@@ -58,6 +59,20 @@ public class BeaconHooks {
     }
     boolean validConfig = config.getAdditionalCreatures().contains(livingEntity.getType());
     return validType || validConfig;
+  }
+
+  private static boolean isTamed(LivingEntity livingEntity) {
+    boolean flag =
+        livingEntity instanceof TameableEntity && ((TameableEntity) livingEntity).isTamed();
+
+    if (!flag) {
+      flag = livingEntity instanceof HorseBaseEntity && ((HorseBaseEntity) livingEntity).isTame();
+    }
+
+    if (!flag) {
+      flag = livingEntity instanceof Saddleable && ((Saddleable) livingEntity).isSaddled();
+    }
+    return flag;
   }
 
   public static void addBeaconEffectsToCreatures(BeaconBlockEntity beacon) {
