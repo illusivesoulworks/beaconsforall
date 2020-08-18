@@ -100,7 +100,7 @@ public class BeaconHooks {
 
     int j = (9 + levels * 2) * 20;
     Box box = (new Box(pos)).expand(d0).stretch(0.0D, world.getHeight(), 0.0D);
-    List<LivingEntity> list = world.getEntities(LivingEntity.class, box, VALID_CREATURE);
+    List<LivingEntity> list = world.getEntitiesByClass(LivingEntity.class, box, VALID_CREATURE);
 
     for (LivingEntity entity : list) {
       entity.addStatusEffect(new StatusEffectInstance(primaryEffect, j, i, true, true));

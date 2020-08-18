@@ -17,15 +17,31 @@ dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 
+    // Required
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    modImplementation "io.github.prospector:modmenu:${project.modmenu_version}"
+    modImplementation fabricApi.module("fabric-api-base", project.fabric_version)
+    modImplementation fabricApi.module("fabric-lifecycle-events-v1", project.fabric_version)
+    modImplementation "me.shedaniel.cloth:config-2:${project.cloth_version}", {
+        exclude group: "net.fabricmc.fabric-api"
+    }
+    modImplementation "me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}", {
+        exclude group: "net.fabricmc.fabric-api"
+    }
 
-    modApi "me.shedaniel.cloth:config-2:${project.cloth_version}"
+    // Embedded
     include "me.shedaniel.cloth:config-2:${project.cloth_version}"
-
-    modApi "me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}"
     include "me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}"
+    include fabricApi.module("fabric-api-base", project.fabric_version)
+    include fabricApi.module("fabric-lifecycle-events-v1", project.fabric_version)
+
+    // Optional
+    modCompileOnly "io.github.prospector:modmenu:${project.modmenu_version}", {
+        exclude group: "net.fabricmc.fabric-api"
+    }
+    modRuntime "io.github.prospector:modmenu:${project.modmenu_version}", {
+        exclude group: "net.fabricmc.fabric-api"
+    }
+    modRuntime fabricApi.module("fabric-resource-loader-v0", project.fabric_version)
 }
 
 processResources {
