@@ -22,7 +22,9 @@ package top.theillusivec4.beaconsforall.common;
 import com.google.common.base.Predicate;
 import java.util.List;
 import net.minecraft.entity.IEquipable;
+import net.minecraft.entity.INPC;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -52,7 +54,7 @@ public class BeaconsForAllEventHandler {
         validType = isTamed(livingEntity);
         break;
       case PASSIVE:
-        validType = livingEntity instanceof AnimalEntity && !(livingEntity instanceof IMob);
+        validType = (livingEntity instanceof AnimalEntity || livingEntity instanceof INPC) && !(livingEntity instanceof IMob);
         break;
       case ALL:
         validType = true;
