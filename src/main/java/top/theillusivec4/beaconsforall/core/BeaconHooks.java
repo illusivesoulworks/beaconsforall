@@ -23,6 +23,7 @@ import com.google.common.base.Predicate;
 import java.util.List;
 import net.minecraft.block.entity.BeaconBlockEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Npc;
 import net.minecraft.entity.Saddleable;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -51,7 +52,7 @@ public class BeaconHooks {
         validType = isTamed(livingEntity);
         break;
       case PASSIVE:
-        validType = livingEntity instanceof AnimalEntity && !(livingEntity instanceof Monster);
+        validType = (livingEntity instanceof AnimalEntity || livingEntity instanceof Npc) && !(livingEntity instanceof Monster);
         break;
       case ALL:
         validType = true;
