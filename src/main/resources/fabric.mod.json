@@ -15,17 +15,17 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "top.theillusivec4.beaconsforall.loader.common.BeaconsForAllMod"
+      "top.theillusivec4.beaconsforall.common.BeaconsForAllMod"
     ],
     "modmenu": [
-      "top.theillusivec4.beaconsforall.loader.integration.BeaconsForAllModMenu"
+      "top.theillusivec4.beaconsforall.common.integration.BeaconsForAllModMenu"
     ]
   },
   "mixins": [
     "beaconsforall.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.7.4",
-    "minecraft": "1.16.x"
+    "fabricloader": ">=0.11.3",
+    "minecraft": "1.17.x"
   }
 }

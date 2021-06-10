@@ -17,36 +17,24 @@
  * License along with Beacons For All.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package top.theillusivec4.beaconsforall.loader.impl;
+package top.theillusivec4.beaconsforall.common.config;
 
 import java.util.ArrayList;
 import java.util.List;
-import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
-import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
-import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry.Gui.Tooltip;
-import me.sargunvohra.mcmods.autoconfig1u.shadowed.blue.endless.jankson.Comment;
-import top.theillusivec4.beaconsforall.core.BeaconsForAll;
-import top.theillusivec4.beaconsforall.core.base.ConfigReader;
-import top.theillusivec4.beaconsforall.core.base.ModConfig.CreatureType;
+import me.shedaniel.autoconfig.ConfigData;
+import me.shedaniel.autoconfig.annotation.Config;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
+import top.theillusivec4.beaconsforall.common.BeaconsForAllMod;
 
-@Config(name = BeaconsForAll.MODID)
-public class ConfigReaderImpl implements ConfigData, ConfigReader {
+@Config(name = BeaconsForAllMod.MOD_ID)
+public class BfaConfigData implements ConfigData {
 
-  @Tooltip(count = 5)
+  @ConfigEntry.Gui.Tooltip(count = 5)
   @Comment("Set which creatures can be affected by beacons")
-  public CreatureType creatureType = CreatureType.TAMED;
+  public BfaConfig.CreatureType creatureType = BfaConfig.CreatureType.TAMED;
 
-  @Tooltip
+  @ConfigEntry.Gui.Tooltip
   @Comment("List of specific additional creatures by registry name that can be affected by beacons")
   public List<String> additionalCreatures = new ArrayList<>();
-
-  @Override
-  public CreatureType getCreatureType() {
-    return creatureType;
-  }
-
-  @Override
-  public List<String> getAdditionalCreatures() {
-    return additionalCreatures;
-  }
 }

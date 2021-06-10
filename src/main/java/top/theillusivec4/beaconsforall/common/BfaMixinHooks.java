@@ -17,7 +17,7 @@
  * License along with Beacons For All.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package top.theillusivec4.beaconsforall.core;
+package top.theillusivec4.beaconsforall.common;
 
 import com.google.common.base.Predicate;
 import java.util.List;
@@ -35,30 +35,24 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
-import top.theillusivec4.beaconsforall.core.base.Accessor;
-import top.theillusivec4.beaconsforall.core.base.ModConfig;
+import top.theillusivec4.beaconsforall.common.config.BfaConfig;
+import top.theillusivec4.beaconsforall.mixin.AccessorBeaconBlockEntity;
 
-public class BeaconHooks {
+public class BfaMixinHooks {
 
   private static final Predicate<LivingEntity> VALID_CREATURE = living ->
       !(living instanceof PlayerEntity) && isValidCreature(living);
 
   private static boolean isValidCreature(LivingEntity livingEntity) {
-    boolean validType = false;
-    ModConfig config = BeaconsForAll.getInstance().getConfig();
+    boolean validType = switch (BfaConfig.creatureType) {
+      case TAMED -> isTamed(livingEntity);
+      case PASSIVE -> (livingEntity instanceof AnimalEntity || livingEntity instanceof Npc) &&
+          !(livingEntity instanceof Monster);
+      case ALL -> true;
+      default -> false;
+    };
 
-    switch (config.getCreatureType()) {
-      case TAMED:
-        validType = isTamed(livingEntity);
-        break;
-      case PASSIVE:
-        validType = (livingEntity instanceof AnimalEntity || livingEntity instanceof Npc) && !(livingEntity instanceof Monster);
-        break;
-      case ALL:
-        validType = true;
-        break;
-    }
-    boolean validConfig = config.getAdditionalCreatures().contains(livingEntity.getType());
+    boolean validConfig = BfaConfig.additionalCreatures.contains(livingEntity.getType());
     return validType || validConfig;
   }
 
@@ -77,20 +71,20 @@ public class BeaconHooks {
   }
 
   public static void addBeaconEffectsToCreatures(BeaconBlockEntity beacon) {
-    int levels = beacon.getLevel();
+    AccessorBeaconBlockEntity accessor = ((AccessorBeaconBlockEntity) beacon);
+    int levels = accessor.getLevel();
     World world = beacon.getWorld();
 
     if (world == null || world.isClient()) {
       return;
     }
-    Accessor accessor = BeaconsForAll.getInstance().getAccessor();
-    StatusEffect primaryEffect = accessor.getPrimaryEffect(beacon);
+    StatusEffect primaryEffect = accessor.getPrimary();
 
-    if (accessor.getBeamSegments(beacon).isEmpty() || levels <= 0 || primaryEffect == null) {
+    if (accessor.getBeamSegments().isEmpty() || levels <= 0 || primaryEffect == null) {
       return;
     }
 
-    StatusEffect secondaryEffect = accessor.getSecondaryEffect(beacon);
+    StatusEffect secondaryEffect = accessor.getSecondary();
     BlockPos pos = beacon.getPos();
     double d0 = levels * 10 + 10;
     int i = 0;

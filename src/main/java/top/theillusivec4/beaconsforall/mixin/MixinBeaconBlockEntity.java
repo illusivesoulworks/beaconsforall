@@ -17,29 +17,24 @@
  * License along with Beacons For All.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package top.theillusivec4.beaconsforall.loader.impl;
+package top.theillusivec4.beaconsforall.mixin;
 
-import java.util.List;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BeaconBlockEntity;
-import net.minecraft.block.entity.BeaconBlockEntity.BeamSegment;
-import net.minecraft.entity.effect.StatusEffect;
-import top.theillusivec4.beaconsforall.core.base.Accessor;
-import top.theillusivec4.beaconsforall.loader.mixin.BeaconBlockEntityAccessor;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import top.theillusivec4.beaconsforall.common.BfaMixinHooks;
 
-public class AccessorImpl implements Accessor {
+@Mixin(BeaconBlockEntity.class)
+public class MixinBeaconBlockEntity {
 
-  @Override
-  public List<BeamSegment> getBeamSegments(BeaconBlockEntity beacon) {
-    return ((BeaconBlockEntityAccessor) beacon).getBeamSegments();
-  }
-
-  @Override
-  public StatusEffect getPrimaryEffect(BeaconBlockEntity beacon) {
-    return ((BeaconBlockEntityAccessor) beacon).getPrimary();
-  }
-
-  @Override
-  public StatusEffect getSecondaryEffect(BeaconBlockEntity beacon) {
-    return ((BeaconBlockEntityAccessor) beacon).getSecondary();
+  @Inject(at = @At("TAIL"), method = "tick")
+  private static void beaconsforall$tick(World world, BlockPos pos, BlockState state,
+                                         BeaconBlockEntity blockEntity, CallbackInfo cb) {
+    BfaMixinHooks.addBeaconEffectsToCreatures(blockEntity);
   }
 }

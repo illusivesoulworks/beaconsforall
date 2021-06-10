@@ -17,24 +17,27 @@
  * License along with Beacons For All.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package top.theillusivec4.beaconsforall.core.base;
+package top.theillusivec4.beaconsforall.mixin;
 
 import java.util.List;
-import net.minecraft.entity.EntityType;
+import net.minecraft.block.entity.BeaconBlockEntity;
+import net.minecraft.block.entity.BeaconBlockEntity.BeamSegment;
+import net.minecraft.entity.effect.StatusEffect;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Accessor;
 
-public interface ModConfig {
+@Mixin(BeaconBlockEntity.class)
+public interface AccessorBeaconBlockEntity {
 
-  void setCreatureType(CreatureType type);
+  @Accessor
+  int getLevel();
 
-  CreatureType getCreatureType();
+  @Accessor
+  List<BeamSegment> getBeamSegments();
 
-  void setAdditionalCreatures(List<String> list);
+  @Accessor
+  StatusEffect getPrimary();
 
-  List<EntityType<?>> getAdditionalCreatures();
-
-  void bake(ConfigReader reader);
-
-  enum CreatureType {
-    NONE, TAMED, PASSIVE, ALL
-  }
+  @Accessor
+  StatusEffect getSecondary();
 }

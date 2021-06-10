@@ -17,18 +17,23 @@
  * License along with Beacons For All.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package top.theillusivec4.beaconsforall.core.base;
+package top.theillusivec4.beaconsforall.common.integration;
 
-import java.util.List;
-import net.minecraft.block.entity.BeaconBlockEntity;
-import net.minecraft.block.entity.BeaconBlockEntity.BeamSegment;
-import net.minecraft.entity.effect.StatusEffect;
+import com.terraformersmc.modmenu.api.ConfigScreenFactory;
+import com.terraformersmc.modmenu.api.ModMenuApi;
+import me.shedaniel.autoconfig.AutoConfig;
+import top.theillusivec4.beaconsforall.common.BeaconsForAllMod;
+import top.theillusivec4.beaconsforall.common.config.BfaConfigData;
 
-public interface Accessor {
+public class BeaconsForAllModMenu implements ModMenuApi {
 
-  List<BeamSegment> getBeamSegments(BeaconBlockEntity beacon);
+  @Override
+  public ConfigScreenFactory<?> getModConfigScreenFactory() {
 
-  StatusEffect getPrimaryEffect(BeaconBlockEntity beacon);
-
-  StatusEffect getSecondaryEffect(BeaconBlockEntity beacon);
+    if (BeaconsForAllMod.isConfigLoaded) {
+      return screen -> AutoConfig.getConfigScreen(BfaConfigData.class, screen).get();
+    } else {
+      return screen -> null;
+    }
+  }
 }

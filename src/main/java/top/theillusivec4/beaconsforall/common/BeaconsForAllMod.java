@@ -17,21 +17,28 @@
  * License along with Beacons For All.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package top.theillusivec4.beaconsforall.loader.common;
+package top.theillusivec4.beaconsforall.common;
 
-import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
-import me.sargunvohra.mcmods.autoconfig1u.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import top.theillusivec4.beaconsforall.core.BeaconsForAll;
-import top.theillusivec4.beaconsforall.loader.impl.ConfigReaderImpl;
+import net.fabricmc.loader.api.FabricLoader;
+import top.theillusivec4.beaconsforall.common.config.AutoConfigPlugin;
 
 public class BeaconsForAllMod implements ModInitializer {
 
+  public static final String MOD_ID = "beaconsforall";
+
+  public static boolean isConfigLoaded = false;
+
   @Override
   public void onInitialize() {
-    BeaconsForAll.getInstance().setConfigReader(
-        AutoConfig.register(ConfigReaderImpl.class, JanksonConfigSerializer::new).getConfig());
-    ServerLifecycleEvents.SERVER_STARTED.register(minecraftServer -> BeaconsForAll.bakeConfigs());
+    isConfigLoaded = FabricLoader.getInstance().isModLoaded("cloth-config2");
+
+    if (isConfigLoaded) {
+      AutoConfigPlugin.init();
+      ServerLifecycleEvents.SERVER_STARTED.register(minecraftServer -> AutoConfigPlugin.bake());
+      ServerLifecycleEvents.END_DATA_PACK_RELOAD
+          .register((server, serverResourceManager, success) -> AutoConfigPlugin.bake());
+    }
   }
 }
