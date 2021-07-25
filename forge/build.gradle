@@ -63,6 +63,8 @@ sourceSets {
 }
 
 jar {
+    from('CHANGELOG.md')
+
     manifest {
         attributes(["Specification-Title": "${mod_id}",
                     "Specification-Vendor": "${mod_author}",
