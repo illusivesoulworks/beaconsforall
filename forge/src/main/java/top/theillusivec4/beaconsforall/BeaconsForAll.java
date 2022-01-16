@@ -28,7 +28,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fmllegacy.network.FMLNetworkConstants;
+import net.minecraftforge.network.NetworkConstants;
 import top.theillusivec4.beaconsforall.common.BeaconsForAllConfig;
 import top.theillusivec4.beaconsforall.common.BeaconsForAllEventHandler;
 
@@ -43,7 +43,7 @@ public class BeaconsForAll {
     eventBus.addListener(this::config);
     ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, BeaconsForAllConfig.CONFIG_SPEC);
     ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
-        () -> new IExtensionPoint.DisplayTest(() -> FMLNetworkConstants.IGNORESERVERONLY,
+        () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY,
             (a, b) -> true));
   }
 
