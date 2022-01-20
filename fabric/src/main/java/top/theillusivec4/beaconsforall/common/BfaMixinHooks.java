@@ -21,7 +21,6 @@ package top.theillusivec4.beaconsforall.common;
 
 import com.google.common.base.Predicate;
 import java.util.List;
-import net.minecraft.block.entity.BeaconBlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Npc;
 import net.minecraft.entity.Saddleable;
@@ -32,11 +31,9 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.HorseBaseEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import top.theillusivec4.beaconsforall.common.config.BfaConfig;
-import top.theillusivec4.beaconsforall.mixin.AccessorBeaconBlockEntity;
 
 public class BfaMixinHooks {
 
@@ -70,41 +67,18 @@ public class BfaMixinHooks {
     return flag;
   }
 
-  public static void addBeaconEffectsToCreatures(BeaconBlockEntity beacon) {
-    AccessorBeaconBlockEntity accessor = ((AccessorBeaconBlockEntity) beacon);
-    int levels = accessor.getLevel();
-    World world = beacon.getWorld();
-
-    if (world == null || world.isClient() || world.getTime() % 80L != 0L) {
-      return;
-    }
-    StatusEffect primaryEffect = accessor.getPrimary();
-
-    if (accessor.getBeamSegments().isEmpty() || levels <= 0 || primaryEffect == null) {
-      return;
-    }
-
-    StatusEffect secondaryEffect = accessor.getSecondary();
-    BlockPos pos = beacon.getPos();
-    double d0 = levels * 10 + 10;
-    int i = 0;
-
-    if (levels >= 4 && primaryEffect == secondaryEffect) {
-      i = 1;
-    }
-
-    int j = (9 + levels * 2) * 20;
-    Box box = (new Box(pos)).expand(d0).stretch(0.0D, world.getHeight(), 0.0D);
+  public static void applyMobEffects(World world, Box box, int levels, StatusEffect primaryEffect,
+                                     StatusEffect secondaryEffect, int power, int duration) {
     List<LivingEntity> list = world.getEntitiesByClass(LivingEntity.class, box, VALID_CREATURE);
 
     for (LivingEntity entity : list) {
-      entity.addStatusEffect(new StatusEffectInstance(primaryEffect, j, i, true, true));
+      entity.addStatusEffect(new StatusEffectInstance(primaryEffect, duration, power, true, true));
     }
 
     if (levels >= 4 && primaryEffect != secondaryEffect && secondaryEffect != null) {
 
       for (LivingEntity entity : list) {
-        entity.addStatusEffect(new StatusEffectInstance(secondaryEffect, j, 0, true, true));
+        entity.addStatusEffect(new StatusEffectInstance(secondaryEffect, duration, 0, true, true));
       }
     }
   }

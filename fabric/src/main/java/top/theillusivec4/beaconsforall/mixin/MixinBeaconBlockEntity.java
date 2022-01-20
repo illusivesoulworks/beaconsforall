@@ -19,22 +19,34 @@
 
 package top.theillusivec4.beaconsforall.mixin;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BeaconBlockEntity;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import top.theillusivec4.beaconsforall.common.BfaMixinHooks;
 
 @Mixin(BeaconBlockEntity.class)
 public class MixinBeaconBlockEntity {
 
-  @Inject(at = @At("TAIL"), method = "tick")
-  private static void beaconsforall$tick(World world, BlockPos pos, BlockState state,
-                                         BeaconBlockEntity blockEntity, CallbackInfo cb) {
-    BfaMixinHooks.addBeaconEffectsToCreatures(blockEntity);
+  @Inject(
+      at = @At(
+          value = "INVOKE",
+          target = "net/minecraft/world/World.getNonSpectatingEntities(Ljava/lang/Class;Lnet/minecraft/util/math/Box;)Ljava/util/List;"),
+      method = "applyPlayerEffects",
+      locals = LocalCapture.CAPTURE_FAILSOFT)
+  private static void beaconsforall$applyPlayerEffects(World world, BlockPos pos, int beaconLevel,
+                                                       @Nullable StatusEffect primaryEffect,
+                                                       @Nullable StatusEffect secondaryEffect,
+                                                       CallbackInfo cb, double range, int power,
+                                                       int duration, Box box) {
+    BfaMixinHooks.applyMobEffects(world, box, beaconLevel, primaryEffect, secondaryEffect, power,
+        duration);
   }
 }

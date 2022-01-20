@@ -29,9 +29,11 @@ public class BeaconsForAllMod implements ModInitializer {
   public static final String MOD_ID = "beaconsforall";
 
   public static boolean isConfigLoaded = false;
+  public static boolean isBeaconOverhaulLoaded = false;
 
   @Override
   public void onInitialize() {
+    isBeaconOverhaulLoaded = FabricLoader.getInstance().isModLoaded("beaconoverhaul");
     isConfigLoaded = FabricLoader.getInstance().isModLoaded("cloth-config2");
 
     if (isConfigLoaded) {
