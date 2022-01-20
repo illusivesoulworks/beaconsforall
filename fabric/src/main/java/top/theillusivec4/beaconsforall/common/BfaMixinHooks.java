@@ -75,7 +75,7 @@ public class BfaMixinHooks {
     int levels = accessor.getLevel();
     World world = beacon.getWorld();
 
-    if (world == null || world.isClient()) {
+    if (world == null || world.isClient() || world.getTime() % 80L != 0L) {
       return;
     }
     StatusEffect primaryEffect = accessor.getPrimary();
