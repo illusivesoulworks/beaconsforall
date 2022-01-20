@@ -21,6 +21,7 @@ package top.theillusivec4.beaconsforall.common;
 
 import com.google.common.base.Predicate;
 import java.util.List;
+import net.minecraft.block.entity.BeaconBlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Npc;
 import net.minecraft.entity.Saddleable;
@@ -34,6 +35,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import top.theillusivec4.beaconsforall.common.config.BfaConfig;
+import top.theillusivec4.beaconsforall.common.integration.BeaconOverhaulIntegration;
+import top.theillusivec4.beaconsforall.mixin.AccessorBeaconBlockEntity;
 
 public class BfaMixinHooks {
 
@@ -80,6 +83,13 @@ public class BfaMixinHooks {
       for (LivingEntity entity : list) {
         entity.addStatusEffect(new StatusEffectInstance(secondaryEffect, duration, 0, true, true));
       }
+    }
+  }
+
+  public static void tick(BeaconBlockEntity blockEntity) {
+
+    if (BeaconsForAllMod.isBeaconOverhaulLoaded) {
+      BeaconOverhaulIntegration.tick(blockEntity, VALID_CREATURE);
     }
   }
 }
