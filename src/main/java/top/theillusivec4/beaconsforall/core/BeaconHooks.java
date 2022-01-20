@@ -80,7 +80,7 @@ public class BeaconHooks {
     int levels = beacon.getLevel();
     World world = beacon.getWorld();
 
-    if (world == null || world.isClient()) {
+    if (world == null || world.isClient() || world.getTime() % 80L != 0L) {
       return;
     }
     Accessor accessor = BeaconsForAll.getInstance().getAccessor();

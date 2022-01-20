@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.5-SNAPSHOT'
+    id 'fabric-loom' version '0.7-SNAPSHOT'
     id 'com.matthewprenger.cursegradle' version '1.4.0'
 }
 
@@ -11,6 +11,15 @@ version = project.mod_version
 group = project.maven_group
 
 minecraft {
+}
+
+repositories {
+    maven {
+        url = "https://maven.terraformersmc.com/"
+    }
+    maven {
+        url = "https://maven.shedaniel.me/"
+    }
 }
 
 dependencies {
@@ -35,13 +44,13 @@ dependencies {
     include fabricApi.module("fabric-lifecycle-events-v1", project.fabric_version)
 
     // Optional
-    modCompileOnly "io.github.prospector:modmenu:${project.modmenu_version}", {
+    modCompileOnly "com.terraformersmc:modmenu:${project.modmenu_version}", {
         exclude group: "net.fabricmc.fabric-api"
     }
-    modRuntime "io.github.prospector:modmenu:${project.modmenu_version}", {
+    modRuntime "com.terraformersmc:modmenu:${project.modmenu_version}", {
         exclude group: "net.fabricmc.fabric-api"
     }
-    modRuntime fabricApi.module("fabric-resource-loader-v0", project.fabric_version)
+    modRuntime "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 }
 
 processResources {
