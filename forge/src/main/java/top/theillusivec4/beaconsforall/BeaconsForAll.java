@@ -19,18 +19,15 @@
 
 package top.theillusivec4.beaconsforall;
 
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.NetworkConstants;
 import top.theillusivec4.beaconsforall.common.BeaconsForAllConfig;
-import top.theillusivec4.beaconsforall.common.BeaconsForAllEventHandler;
 
 @Mod(BeaconsForAll.MODID)
 public class BeaconsForAll {
@@ -39,19 +36,22 @@ public class BeaconsForAll {
 
   public BeaconsForAll() {
     IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-    eventBus.addListener(this::setup);
-    eventBus.addListener(this::config);
+    eventBus.addListener(this::configLoading);
+    eventBus.addListener(this::configReloading);
     ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, BeaconsForAllConfig.CONFIG_SPEC);
     ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
         () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY,
             (a, b) -> true));
   }
 
-  private void setup(FMLCommonSetupEvent evt) {
-    MinecraftForge.EVENT_BUS.register(new BeaconsForAllEventHandler());
+  private void configLoading(final ModConfigEvent.Loading evt) {
+
+    if (evt.getConfig().getModId().equals(MODID)) {
+      BeaconsForAllConfig.bake();
+    }
   }
 
-  private void config(final ModConfigEvent evt) {
+  private void configReloading(final ModConfigEvent.Reloading evt) {
 
     if (evt.getConfig().getModId().equals(MODID)) {
       BeaconsForAllConfig.bake();

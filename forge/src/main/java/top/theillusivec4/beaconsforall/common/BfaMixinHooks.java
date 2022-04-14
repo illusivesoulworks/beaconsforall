@@ -21,7 +21,6 @@ package top.theillusivec4.beaconsforall.common;
 
 import com.google.common.base.Predicate;
 import java.util.List;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -33,15 +32,9 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.npc.Npc;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BeaconBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.TickingBlockEntity;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import top.theillusivec4.beaconsforall.util.ReflectionAccessor;
 
-public class BeaconsForAllEventHandler {
+public class BfaMixinHooks {
 
   private static final Predicate<LivingEntity> VALID_CREATURE = living ->
       !(living instanceof Player) && isValidCreature(living);
@@ -73,53 +66,21 @@ public class BeaconsForAllEventHandler {
     return flag;
   }
 
-  private static void addBeaconEffectsToCreatures(BeaconBlockEntity beacon, Level world) {
-    int levels = ReflectionAccessor.getLevels(beacon);
-    MobEffect primaryEffect = ReflectionAccessor.getPrimaryEffect(beacon);
-
-    if (ReflectionAccessor.getBeamSegments(beacon).isEmpty() || levels <= 0
-        || primaryEffect == null) {
-      return;
-    }
-    MobEffect secondaryEffect = ReflectionAccessor.getSecondaryEffect(beacon);
-    BlockPos pos = beacon.getBlockPos();
-    double d0 = levels * 10 + 10;
-    int i = 0;
-
-    if (levels >= 4 && primaryEffect == secondaryEffect) {
-      i = 1;
-    }
-
-    int j = (9 + levels * 2) * 20;
-    AABB axisalignedbb = (new AABB(pos)).inflate(d0)
-        .expandTowards(0.0D, world.getMaxBuildHeight(), 0.0D);
+  public static void applyMobEffects(Level world, AABB box, int beaconLevel,
+                                     MobEffect primaryEffect, MobEffect secondaryEffect, int power,
+                                     int duration) {
     List<LivingEntity> list = world
-        .getEntitiesOfClass(LivingEntity.class, axisalignedbb, VALID_CREATURE);
+        .getEntitiesOfClass(LivingEntity.class, box, VALID_CREATURE);
 
     for (LivingEntity entity : list) {
-      entity.addEffect(new MobEffectInstance(primaryEffect, j, i, true, true));
+      entity.addEffect(new MobEffectInstance(primaryEffect, duration, power, true, true));
     }
 
-    if (levels >= 4 && primaryEffect != secondaryEffect && secondaryEffect != null) {
+    if (beaconLevel >= 4 && primaryEffect != secondaryEffect && secondaryEffect != null) {
 
       for (LivingEntity entity : list) {
-        entity.addEffect(new MobEffectInstance(secondaryEffect, j, 0, true, true));
+        entity.addEffect(new MobEffectInstance(secondaryEffect, duration, 0, true, true));
       }
-    }
-  }
-
-  @SubscribeEvent
-  public void onWorldTick(TickEvent.WorldTickEvent evt) {
-    Level world = evt.world;
-
-    if (world.isClientSide || evt.phase != TickEvent.Phase.END || world.getGameTime() % 80L != 0L) {
-      return;
-    }
-
-    for (TickingBlockEntity tickable : ReflectionAccessor.getBlockEntities(world)) {
-      BlockPos pos = tickable.getPos();
-      world.getBlockEntity(pos, BlockEntityType.BEACON)
-          .ifPresent(beaconBlockEntity -> addBeaconEffectsToCreatures(beaconBlockEntity, world));
     }
   }
 }
