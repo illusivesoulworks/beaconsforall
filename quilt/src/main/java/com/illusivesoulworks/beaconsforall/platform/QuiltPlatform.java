@@ -28,7 +28,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 
-public class FabricPlatform implements IPlatform {
+public class QuiltPlatform implements IPlatform {
 
   @Override
   public EntityType<?> getEntityType(ResourceLocation resourceLocation) {
