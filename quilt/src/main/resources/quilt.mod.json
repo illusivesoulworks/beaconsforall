@@ -6,7 +6,7 @@
     "version": "${version}",
     "intermediate_mappings": "net.fabricmc:intermediary",
     "entrypoints": {
-      "init": [
+      "spectrelib": [
         "com.illusivesoulworks.beaconsforall.BeaconsForAllQuiltMod"
       ]
     },
@@ -41,6 +41,9 @@
       "description": "${mod_description}",
       "contributors": {
         "${mod_author}": "Owner"
+      },
+      "contact": {
+        "issues": "${issue_tracker}"
       },
       "license": "${license}",
       "icon": "${mod_id}_icon.png"

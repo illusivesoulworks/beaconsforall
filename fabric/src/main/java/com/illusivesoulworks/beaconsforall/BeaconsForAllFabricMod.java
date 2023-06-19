@@ -17,12 +17,12 @@
 
 package com.illusivesoulworks.beaconsforall;
 
-import net.fabricmc.api.ModInitializer;
+import com.illusivesoulworks.spectrelib.config.SpectreLibInitializer;
 
-public class BeaconsForAllFabricMod implements ModInitializer {
+public class BeaconsForAllFabricMod implements SpectreLibInitializer {
 
   @Override
-  public void onInitialize() {
+  public void onInitializeConfig() {
     BeaconsForAllMod.init();
   }
 }

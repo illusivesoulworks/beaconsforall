@@ -14,7 +14,7 @@
   "icon": "${mod_id}_icon.png",
   "environment": "*",
   "entrypoints": {
-    "main": [
+    "spectrelib": [
       "com.illusivesoulworks.beaconsforall.BeaconsForAllFabricMod"
     ]
   },

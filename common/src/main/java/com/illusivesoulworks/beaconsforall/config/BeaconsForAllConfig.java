@@ -65,12 +65,12 @@ public class BeaconsForAllConfig {
     public final SpectreConfigSpec.ConfigValue<List<? extends String>> additionalCreatures;
 
     public Config(SpectreConfigSpec.Builder builder) {
-      creatureType = builder.comment("Set which creatures can be affected by beacons")
+      creatureType = builder.comment("Creature type that can be affected by beacons.")
           .translation(CONFIG_PREFIX + "creatureType")
           .defineEnum("creatureType", CreatureType.TAMED);
 
       additionalCreatures = builder
-          .comment("Add specific creatures that can be affected by beacons")
+          .comment("Additional creatures or creature tags that can be affected by beacons.")
           .translation(CONFIG_PREFIX + "additionalCreatures")
           .defineList("additionalCreatures", new ArrayList<>(), s -> s instanceof String);
     }

@@ -1,0 +1,6 @@
+{
+  "gui.beaconsforall.config.creatureType.name": "Creature type affected by beacons.",
+  "gui.beaconsforall.config.creatureType.description": "Creature type that can be affected by beacons",
+  "gui.beaconsforall.config.additionalCreatures.name": "Additional creatures affected by beacons",
+  "gui.beaconsforall.config.additionalCreatures.description": "Additional creatures or creature tags that can be affected by beacons."
+}

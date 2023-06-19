@@ -17,13 +17,13 @@
 
 package com.illusivesoulworks.beaconsforall;
 
+import com.illusivesoulworks.spectrelib.config.SpectreLibInitializer;
 import org.quiltmc.loader.api.ModContainer;
-import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 
-public class BeaconsForAllQuiltMod implements ModInitializer {
+public class BeaconsForAllQuiltMod implements SpectreLibInitializer {
 
   @Override
-  public void onInitialize(ModContainer modContainer) {
+  public void onInitializeConfig(ModContainer modContainer) {
     BeaconsForAllMod.init();
   }
 }
