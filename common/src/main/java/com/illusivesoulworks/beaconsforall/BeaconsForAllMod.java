@@ -39,7 +39,11 @@ public class BeaconsForAllMod {
     SpectreConfig config =
         SpectreConfigLoader.add(SpectreConfig.Type.SERVER, BeaconsForAllConfig.CONFIG_SPEC,
             BeaconsForAllConstants.MOD_ID);
-    config.addLoadListener((cfg, flag) -> BeaconsForAllConfig.reload());
+    config.addLoadListener((cfg, flag) -> {
+      if (flag) {
+        BeaconsForAllConfig.loadConfigs();
+      }
+    });
   }
 
   public static boolean canApplyEffects(LivingEntity livingEntity) {

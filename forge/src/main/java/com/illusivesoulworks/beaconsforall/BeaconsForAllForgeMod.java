@@ -17,6 +17,10 @@
 
 package com.illusivesoulworks.beaconsforall;
 
+import com.illusivesoulworks.beaconsforall.config.BeaconsForAllConfig;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.server.ServerStartedEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -30,5 +34,11 @@ public class BeaconsForAllForgeMod {
     ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
         () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY,
             (a, b) -> true));
+    MinecraftForge.EVENT_BUS.register(this);
+  }
+
+  @SubscribeEvent
+  public void onServerStarting(ServerStartedEvent evt) {
+    BeaconsForAllConfig.loadConfigs();
   }
 }

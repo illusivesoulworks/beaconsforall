@@ -41,7 +41,7 @@ public class BeaconsForAllConfig {
 
   public static final List<EntityType<?>> ADDITIONAL_CREATURES = new ArrayList<>();
 
-  public static void reload() {
+  public static void loadConfigs() {
     ADDITIONAL_CREATURES.clear();
     CONFIG.additionalCreatures.get().forEach(creature -> {
       List<EntityType<?>> types = new ArrayList<>();

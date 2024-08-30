@@ -6,6 +6,9 @@
     "version": "${version}",
     "intermediate_mappings": "net.fabricmc:intermediary",
     "entrypoints": {
+      "init": [
+        "com.illusivesoulworks.beaconsforall.BeaconsForAllQuiltMod"
+      ],
       "spectrelib": [
         "com.illusivesoulworks.beaconsforall.BeaconsForAllQuiltMod"
       ]
