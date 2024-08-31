@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 Prior to version 6.0.0, this project used MCVERSION-MAJORMOD.MAJORAPI.MINOR.PATCH.
 
 ## [6.2.2+1.20.1] - 2024.08.31
+### Added
+- Added `ru_ru` localization [#10](https://github.com/illusivesoulworks/beaconsforall/pull/10)
 ### Fixed
 - Fixed dedicated server crash when using the `additionalCreatures` configuration
 
