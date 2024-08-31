@@ -1,0 +1,6 @@
+{
+  "gui.beaconsforall.config.creatureType.name": "Тип существ, на которых воздействуют маяки.",
+  "gui.beaconsforall.config.creatureType.description": "Тип существ, на которыхое могут воздействовать маяки",
+  "gui.beaconsforall.config.additionalCreatures.name": "Дополнительные существа, на которых воздействуют маяки",
+  "gui.beaconsforall.config.additionalCreatures.description": "Дополнительные существа или теги существ, на которых могут воздействовать маяки."
+}
