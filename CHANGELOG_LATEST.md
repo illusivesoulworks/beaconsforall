@@ -2,7 +2,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 This is a copy of the changelog for the most recent version. For the full version history, go [here](https://github.com/illusivesoulworks/beaconsforall/1.19.4/CHANGELOG.md).
 
-## [6.2.1+1.20.1] - 2023.10.24
-### Changed
-- Updated to SpectreLib 0.13.14
-- [Fabric] Requires Fabric Loader >=0.14.23
+## [6.2.2+1.20.1] - 2024.08.31
+### Fixed
+- Fixed dedicated server crash when using the `additionalCreatures` configuration
